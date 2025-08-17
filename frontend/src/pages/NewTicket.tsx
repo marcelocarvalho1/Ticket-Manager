@@ -9,7 +9,7 @@ export default function NewTicket() {
 
   const handleTicketCreated = (ticket: Ticket) => {
     setTickets(prev => [ticket, ...prev]);
-    navigate("/"); // redireciona para dashboard
+    navigate("/"); 
   };
 
   return (

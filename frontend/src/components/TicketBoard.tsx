@@ -1,6 +1,6 @@
 // src/components/TicketBoard.tsx
 import React from "react";
-import { useDrop, useDrag, DndProvider } from "react-dnd";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Ticket, updateTicketStatus } from "../api/ticketService";
 
@@ -46,8 +46,12 @@ export default function TicketBoard({ tickets, setTickets }: TicketBoardProps) {
   ];
 
   const moveTicket = async (id: string, status: Ticket["status"]) => {
-    const updated = await updateTicketStatus(id, status);
-    setTickets((prev) => prev.map((t) => (t._id === id ? updated : t)));
+    try {
+      const updated = await updateTicketStatus(id, status);
+      setTickets((prev) => prev.map((t) => (t._id === id ? updated : t)));
+    } catch (err) {
+      console.error("Erro ao atualizar ticket:", err);
+    }
   };
 
   return (
